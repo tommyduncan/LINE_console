@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/javascripts/library/bootstrap/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='/javascripts/library/bootstrap/css/bootstrap-theme.min.css' />
+
+    <script type="text/javascript" src="/javascripts/library/angularjs/1.6.3/angular.min.js"></script>
+    <script type="text/javascript" src="/javascripts/library/angularjs/angular-ui-router.js"></script>
+    <script type="text/javascript" src="/javascripts/library/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/javascripts/library/bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/javascripts/app.module.js"></script>
+    <script type="text/javascript" src="/javascripts/app.config.js"></script>
+    <script type="text/javascript" src="/javascripts/app.run.js"></script>
+
+    <script type="text/javascript" src="/javascripts/controllers/textMessageController.js"></script>
+
+    <script type="text/javascript" src="/javascripts/services/messageService.js"></script>
+</head>
+
+<body ng-app="LINE_console">
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-3">
+                <div class="profile-sidebar">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        <img src="/images/LINE@.png" class="img-responsive" alt="">
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name">
+                            Tommy Liang
+                        </div>
+                        <div class="profile-usertitle-job">
+                            iLab
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+                    <!-- SIDEBAR BUTTONS -->
+                    <div class="profile-userbuttons">
+                        <button type="button" class="btn btn-success btn-sm">Follow</button>
+                        <button type="button" class="btn btn-danger btn-sm">Message</button>
+                    </div>
+                    <!-- END SIDEBAR BUTTONS -->
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+                        <ul class="nav">
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-user"></i> 帳戶資訊 
+                                </a>                                
+                            </li>
+                            <li>
+                                <a href="/#!/accounts">
+                                    <i class="glyphicon glyphicon-list"></i> 會員列表 
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class="glyphicon glyphicon-calendar"></i> 活動資訊 
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-pencil"></i> 發送訊息 
+                                </a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a href="/#!/textMessage"><i class=""></i>文字訊息</a>
+                                    </li>
+                                    <li>
+                                        <a href="/#!/textMessage"><i class=""></i>圖片訊息</a>
+                                    </li>
+                                    <li>
+                                        <a href="/#!/textMessage"><i class=""></i>樣板訊息</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END MENU -->
+                </div>
+            </div>
+            <div class="col-md-9">
+               <ui-view>
+               </ui-view>
+            </div>
+        </div>
+    </div>
+    <center>
+        <strong></strong>
+    </center>
+    <br>
+    <br>
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function() {
+    $( '.dropdown' ).hover(
+        function(){
+            $(this).children('.sub-menu').slideDown(200);
+        },
+        function(){
+            $(this).children('.sub-menu').slideUp(200);
+        }
+    );
+});
+</script>

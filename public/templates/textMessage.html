@@ -1,0 +1,18 @@
+<div class="profile-content">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-md-offset-6 col-md-2" for="title">文字訊息</label>
+        </div>        
+        <div class="form-group">
+            <label class="control-label col-md-2" for="messageContent">內容：</label>
+            <div class="col-md-10">
+                <textarea class="form-control" rows="5" ng-model="textContent"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-6 col-md-10">
+                <button type="submit" class="btn btn-default" ng-click="sendMessage()">發送</button>
+            </div>
+        </div>
+    </form>
+</div>
