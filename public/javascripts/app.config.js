@@ -10,9 +10,14 @@ angular.module('LINE_console').config(function ($stateProvider, $urlRouterProvid
             url: '/accounts', 
             templateUrl: '/templates/accounts.html'
         })
-        .state('textMessage', {
+        .state('text-message', {
             url: '/textMessage', 
             templateUrl: '/templates/textMessage.html', 
             controller: 'TextMessageController'
+        })
+        .state('image-message', {
+            url: '/imageMessage', 
+            templateUrl: '/templates/imageMessage.html', 
+            controller: 'ImageMessageController'
         });
 });

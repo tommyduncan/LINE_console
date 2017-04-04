@@ -9,6 +9,16 @@ var sendTextMessage = function (text, callback) {
     });
 };
 
+var sendImageMessage = function (imageName, callback) {
+    request.sendImageMessage(imageName, function (error, data) {
+        if (error)
+            callback(error, null);
+        else
+            callback(null, data);
+    });
+};
+
 module.exports = {
-    sendTextMessage: sendTextMessage
+    sendTextMessage: sendTextMessage, 
+    sendImageMessage: sendImageMessage
 };
