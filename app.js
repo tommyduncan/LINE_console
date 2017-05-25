@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var messages = require('./routes/messages');
@@ -12,9 +14,17 @@ var upload = require('./routes/upload');
 
 var app = express();
 
+var passport = require('passport');
+app.use(passport.initialize());
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+// mongoose connection
+mongoose.connect('mongodb://tommyduncan:tommy801021@localhost:27017/LINE_Console', function(error) {
+  // if error is truthy, the initial connection failed.
+})
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
