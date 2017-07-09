@@ -1,9 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var authentication = require('../modules/authenticationModule');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', authentication, function (req, res, next) {
+  res.render('LINE_Console', { title: 'LINE_Console' });
+});
+
+router.get('/login', function (req, res, next) {
+  res.render('login', { title: 'LINE_Console' });
 });
 
 module.exports = router;

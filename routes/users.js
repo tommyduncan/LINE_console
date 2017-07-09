@@ -5,17 +5,20 @@ var passport = require('passport'),
 var User = require('../schemas/userSchema');
 
 passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-/* GET users listing. */
 router.post('/login', function (req, res) {
   User.authenticate()(req.body.username, req.body.password, function (err, user, options) {
     if (err)
       return next(err);
 
     if (!user)
-      res.status(401).send(options.message);
+      res.json({ status: false, message: options.message });
     else
-      res.send('Login success: \'' + user.username + '\'');
+      req.login(user, function (err) {
+        res.json({ status: true, user: user });
+      });
   });
 });
 
@@ -27,6 +30,12 @@ router.post('/register', function (req, res) {
     else
       res.send('Register success !');
   });
+});
+
+router.post('/logout', (req, res) => {
+  req.session.destroy();
+  req.logout();
+  res.json({ status: true })
 });
 
 module.exports = router;
