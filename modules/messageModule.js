@@ -18,7 +18,17 @@ var sendImageMessage = function (imageName, callback) {
     });
 };
 
+var replyTemplateMessage = function (replyToken, callback) {
+    request.replyTemplateMessage(replyToken, function (error, data) {
+        if (error)
+            callback(error, null);
+        else
+            callback(null, data);
+    });
+};
+
 module.exports = {
-    sendTextMessage: sendTextMessage, 
-    sendImageMessage: sendImageMessage
+    sendTextMessage: sendTextMessage,
+    sendImageMessage: sendImageMessage,
+    replyTemplateMessage: replyTemplateMessage
 };
