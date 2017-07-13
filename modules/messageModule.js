@@ -18,8 +18,8 @@ var sendImageMessage = function (imageName, callback) {
     });
 };
 
-var replyTemplateMessage = function (replyToken, callback) {
-    request.replyTemplateMessage(replyToken, function (error, data) {
+var replyTemplateMessage = function (replyToken, userId, callback) {
+    request.replyTemplateMessage(replyToken, userId, function (error, data) {
         if (error)
             callback(error, null);
         else

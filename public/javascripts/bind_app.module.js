@@ -1,0 +1,1 @@
+angular.module('bind_app', ['ionic']);

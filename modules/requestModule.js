@@ -65,7 +65,7 @@ var sendImageMessage = function (imageName, callback) {
     );
 };
 
-var replyTemplateMessage = function (replyToken, callback) {
+var replyTemplateMessage = function (replyToken, userId,  callback) {
     var requestBody = {
         replyToken: replyToken,
         messages: [
@@ -81,7 +81,7 @@ var replyTemplateMessage = function (replyToken, callback) {
                         {
                             "type": "uri",
                             "label": "註冊會員",
-                            "uri": "https://tommyduncan.csie.io/"
+                            "uri": "https://tommyduncan.csie.io/bind#/index?userId=" + userId
                         }
                     ]
                 }

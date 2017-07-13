@@ -10,7 +10,7 @@ router.post('/', (req, res, next) => {
     /*console.log('userId: ' + events[0].source.userId);
     console.log('replyToken: ' + events[0].replyToken);*/
 
-    line.replyTemplateMessage(events[0].replyToken, function (error, data) {
+    line.replyTemplateMessage(events[0].replyToken, events[0].source.userId, function (error, data) {
       if (error)
         res.json({ status: 0, data: data });
       else
@@ -19,6 +19,8 @@ router.post('/', (req, res, next) => {
   } else if (events[0].type === 'postback') {
     console.log(events[0].postback);
     res.send('postback event.');
+  } else {
+    res.send('message event.');
   }
 });
 

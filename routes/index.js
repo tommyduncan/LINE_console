@@ -11,4 +11,8 @@ router.get('/login', function (req, res, next) {
   res.render('login', { title: 'LINE_Console' });
 });
 
+router.get('/bind', function (req, res, next) {
+  res.render('bind', { title: '' });
+});
+
 module.exports = router;
