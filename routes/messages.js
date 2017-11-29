@@ -70,6 +70,7 @@ router.post('/', (req, res, next) => {
       });
       break;
   }
+  res.send("Verify success !");
 });
 
 router.post('/sendTextMessage', function (req, res, next) {

@@ -37,6 +37,7 @@ jspm_packages
 .node_repl_history
 
 # SSL certificate
+*.pem
 *.pfx
 *.zip
 *.crt
@@ -44,3 +45,5 @@ jspm_packages
 
 #upload image
 public/images/uploads/
+
+package-lock.json
