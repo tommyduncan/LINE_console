@@ -19,4 +19,4 @@ var User = new Schema({});
 
 User.plugin(passportLocalMongoose, options.errorMessages);
 
-module.exports = mongoose.model('User', User);
+module.exports = mongoose.model('Users', User, "Users");

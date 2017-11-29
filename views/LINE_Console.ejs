@@ -8,19 +8,25 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/javascripts/library/bootstrap/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/javascripts/library/bootstrap/css/bootstrap-theme.min.css' />
+    <link rel='stylesheet' href='/stylesheets/kendo/kendo.common.min.css' />
+    <link rel='stylesheet' href='/stylesheets/kendo/kendo.default.min.css' />
+    <link rel='stylesheet' href='/stylesheets/kendo/kendo.default.mobile.min.css' />
 
+    <script type="text/javascript" src="/javascripts/library/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="/javascripts/library/angularjs/1.6.3/angular.min.js"></script>
     <script type="text/javascript" src="/javascripts/library/angularjs/angular-ui-router.js"></script>
-    <script type="text/javascript" src="/javascripts/library/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="/javascripts/library/kendo/kendo.all.min.js"></script>
     <script type="text/javascript" src="/javascripts/library/bootstrap/js/bootstrap.min.js"></script>
 
     <script type="text/javascript" src="/javascripts/app.module.js"></script>
     <script type="text/javascript" src="/javascripts/app.config.js"></script>
     <script type="text/javascript" src="/javascripts/app.run.js"></script>
 
+    <script type="text/javascript" src="/javascripts/controllers/membersController.js"></script>
     <script type="text/javascript" src="/javascripts/controllers/textMessageController.js"></script>
     <script type="text/javascript" src="/javascripts/controllers/imageMessageController.js"></script>
 
+    <script type="text/javascript" src="/javascripts/services/memberService.js"></script>
     <script type="text/javascript" src="/javascripts/services/messageService.js"></script>
     <script type="text/javascript" src="/javascripts/services/fileService.js"></script>
 
@@ -62,7 +68,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/#!/accounts">
+                                <a href="/#!/members">
                                     <i class="glyphicon glyphicon-list"></i> 會員列表 
                                 </a>
                             </li>
@@ -119,12 +125,12 @@
         );
     });
 
-    function logout(){
+    function logout() {
         $.ajax({
             url: "/users/logout",
             type: 'POST'
         }).done(function (result) {
-            if(result.status)
+            if (result.status)
                 location.href = '/';
             else
                 alert('系統錯誤！！');

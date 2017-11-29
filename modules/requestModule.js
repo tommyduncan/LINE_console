@@ -81,7 +81,7 @@ var replyTemplateMessage = function (replyToken, userId,  callback) {
                         {
                             "type": "uri",
                             "label": "註冊會員",
-                            "uri": "https://tommyduncan.csie.io/bind#/index?userId=" + userId
+                            "uri": "https://tommyduncan.csie.io/bind#/?userId=" + userId
                         }
                     ]
                 }

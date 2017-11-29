@@ -1,26 +1,74 @@
 const express = require('express');
-const line = require('../modules/messageModule');
 const router = express.Router();
+const mongoose = require('mongoose');
+const line = require('../modules/messageModule');
 const image = require('../modules/imageModule');
+const LineEventLogModel = require('../schemas/lineEventLogModel');
+const MessageLogModel = require('../schemas/messageLogModel');
 
 router.post('/', (req, res, next) => {
   var events = req.body.events;
 
-  if (events[0].type === 'follow') {
-    /*console.log('userId: ' + events[0].source.userId);
-    console.log('replyToken: ' + events[0].replyToken);*/
+  var lineEventLogModel = new LineEventLogModel({
+    evenType: events[0].type,
+    sourceType: events[0].source.type,
+    userId: events[0].source.userId,
+    timestamp: events[0].timestamp
+  });
 
-    line.replyTemplateMessage(events[0].replyToken, events[0].source.userId, function (error, data) {
-      if (error)
-        res.json({ status: 0, data: data });
-      else
-        res.json({ status: 1, data: data });
-    });
-  } else if (events[0].type === 'postback') {
-    console.log(events[0].postback);
-    res.send('postback event.');
-  } else {
-    res.send('message event.');
+  switch (events[0].type) {
+    case 'follow':
+      lineEventLogModel.eventReferenceId = null;
+
+      lineEventLogModel.save((error, data) => {
+        if (error) console.log(handleError(error));
+      });
+
+      line.replyTemplateMessage(events[0].replyToken, events[0].source.userId, function (error, data) {
+        if (error)
+          res.json({ status: 0, data: data });
+        else
+          res.json({ status: 1, data: data });
+      });
+      break;
+    case 'unfollow':
+      lineEventLogModel.eventReferenceId = null;
+      
+      lineEventLogModel.save((error, data) => {
+        if (error) {
+          console.log(handleError(error));
+
+          res.json({ status: 0, data: error });
+        }
+      });
+      break;
+    case 'postback':
+      console.log(events[0].postback);
+      res.send('postback event.');
+      break;
+
+    case 'message':
+      console.log(events[0]);
+
+      var messageLogModel = new MessageLogModel({
+        _id: new mongoose.Types.ObjectId(),
+        messageId: events[0].message.id,
+        messageType: events[0].message.type,
+        messageContent: events[0].message.text
+      });
+
+      messageLogModel.save(error => {
+        if (error) { console.log(error); res.json({ status: 0, data: error }); }
+
+        lineEventLogModel.eventReferenceId = messageLogModel._id;
+
+        lineEventLogModel.save((error, data) => {
+          if (error) { res.json({ status: 0, data: error }); }
+
+          res.json({ status: 1, data: data });
+        });
+      });
+      break;
   }
 });
 

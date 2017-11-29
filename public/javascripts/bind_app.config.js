@@ -2,10 +2,13 @@ angular.module('bind_app').config(['$ionicConfigProvider', '$stateProvider', '$u
     $urlRouterProvider.otherwise('/');
     $stateProvider
         .state('index', {
-            url: '/index',
-            templateUrl: 'templates/bind_app/index.html'/*,
-            controller: 'IndexController',
-            controllerAs: 'indexCtrl'*/
+            url: '/',
+            templateUrl: 'templates/bind_app/index.html',
+            controller: 'IndexController'
+        })
+        .state('done', {
+            url: '/done',
+            templateUrl: 'templates/bind_app/done.html'
         });
         
     $ionicConfigProvider.navBar.alignTitle('center');

@@ -6,9 +6,10 @@ angular.module('LINE_console').config(function ($stateProvider, $urlRouterProvid
             url: '/', 
             templateUrl: '/templates/main.html'
         })
-        .state('account-list', {
-            url: '/accounts', 
-            templateUrl: '/templates/accounts.html'
+        .state('members', {
+            url: '/members', 
+            templateUrl: '/templates/members.html', 
+            controller: 'MembersController'
         })
         .state('text-message', {
             url: '/textMessage', 

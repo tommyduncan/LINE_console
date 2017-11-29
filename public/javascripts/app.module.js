@@ -1,1 +1,1 @@
-angular.module('LINE_console', ['ui.router']);
+angular.module('LINE_console', ['ui.router', 'kendo.directives']);

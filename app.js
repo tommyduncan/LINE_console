@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var member = require('./routes/member');
 var messages = require('./routes/messages');
 var upload = require('./routes/upload');
 
@@ -45,6 +46,7 @@ mongoose.connect('mongodb://tommyduncan:tommy801021@localhost:27017/LINE_Console
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/member', member);
 app.use('/messages', messages);
 app.use('/upload', upload);
 
