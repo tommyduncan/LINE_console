@@ -22,6 +22,7 @@ router.post('/', (req, res, next) => {
   } else {
     res.send('message event.');
   }
+  res.send("Verify success !");
 });
 
 router.post('/sendTextMessage', function (req, res, next) {

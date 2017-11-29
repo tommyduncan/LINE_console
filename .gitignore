@@ -37,7 +37,10 @@ jspm_packages
 .node_repl_history
 
 # SSL certificate
+*.pem
 *.pfx
 *.zip
 *.crt
 *.key
+
+package-lock.json
