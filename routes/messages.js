@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const line = require('../modules/messageModule');
-const image = require('../modules/imageModule');
+const imageUtil = require('../utils/imageUtil');
 const LineEventLogModel = require('../schemas/lineEventLogModel');
 const MessageLogModel = require('../schemas/messageLogModel');
 
@@ -54,8 +54,10 @@ router.post('/', (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         messageId: events[0].message.id,
         messageType: events[0].message.type,
-        messageContent: events[0].message.text
+        messageContent: (typeof events[0].message.text === 'undefined') ? null : events[0].message.text
       });
+
+      console.log(messageLogModel);
 
       messageLogModel.save(error => {
         if (error) { console.log(error); res.json({ status: 0, data: error }); }
@@ -70,7 +72,6 @@ router.post('/', (req, res, next) => {
       });
       break;
   }
-  res.send("Verify success !");
 });
 
 router.post('/sendTextMessage', function (req, res, next) {
@@ -83,7 +84,7 @@ router.post('/sendTextMessage', function (req, res, next) {
 });
 
 router.post('/sendImageMessage', function (req, res, next) {
-  image.resizeImage(req.body.imageName);
+  imageUtil.resizeImage(req.body.imageName);
 
   line.sendImageMessage(req.body.imageName, function (error, data) {
     if (error)

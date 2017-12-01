@@ -1,0 +1,10 @@
+var config = {
+    baseUrl: 'https://93dcb5a3.ngrok.io/',
+    LINE: {
+        channelId: '1506801507', 
+        channelSecret: '07335b084601436deb2a97de9cedcf70', 
+        channelAccessToken: '9MrCORI6bmHSjyGM3Zz4SIo+E6c6CPmBMkC2Q/GLH36TB1Em0ARtW2O28ZMymKoqb9GPkdMUV+Ksq5znRj4cpa82p78R0LI7isqJngIo+hy+O4JidF+JxSsZGdm6ZDq3/SIigB/ZlTFqQdMRl09vwgdB04t89/1O/w1cDnyilFU='
+    }
+}
+
+module.exports = config;

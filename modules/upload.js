@@ -1,9 +1,9 @@
 var options = {
-    destination: function (req, file, cb) {
-        cb(null, './public/images/uploads')
+    destination: function (req, file, callback) {
+        callback(null, './public/images/uploads')
     },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
+    filename: function (req, file, callback) {
+        callback(null, file.originalname)
     }
 };
 
