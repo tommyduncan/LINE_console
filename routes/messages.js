@@ -21,7 +21,12 @@ router.post('/', (req, res, next) => {
       lineEventLogModel.eventReferenceId = null;
 
       lineEventLogModel.save((error, data) => {
-        if (error) console.log(handleError(error));
+        if (error) {
+          console.log(handleError(error));
+
+          res.json({ status: 0, data: error });
+        }
+        //res.json({ status: 1, data: data });
       });
 
       line.replyTemplateMessage(events[0].replyToken, events[0].source.userId, function (error, data) {
@@ -29,7 +34,7 @@ router.post('/', (req, res, next) => {
           res.json({ status: 0, data: data });
         else
           res.json({ status: 1, data: data });
-      });
+      }); 
       break;
     case 'unfollow':
       lineEventLogModel.eventReferenceId = null;
@@ -40,6 +45,7 @@ router.post('/', (req, res, next) => {
 
           res.json({ status: 0, data: error });
         }
+        res.json({ status: 1, data: data });
       });
       break;
     case 'postback':

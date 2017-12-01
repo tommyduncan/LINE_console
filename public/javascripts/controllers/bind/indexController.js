@@ -1,6 +1,5 @@
 angular.module('bind_app').controller('IndexController', function ($scope, $state, $location, $ionicPopup, MemberService) {
     $scope.memberData = {
-        userId: '',
         firstName: '',
         lastName: '',
         phone: '',
@@ -12,7 +11,6 @@ angular.module('bind_app').controller('IndexController', function ($scope, $stat
 
     $scope.bind = function () {
         if (validateFormData()) {
-            $scope.memberData.userId = $location.search().userId;
             MemberService.bindMember($scope.memberData, (data) => {
                 console.log(data);
 
@@ -36,6 +34,16 @@ angular.module('bind_app').controller('IndexController', function ($scope, $stat
 
     function initial() {
         /* 檢查使用者是否已綁定過 */
+        MemberService.checkDuplicateMember((data) => {
+            if (data.status === 1)
+            $ionicPopup.alert({
+                title: '提醒！',
+                template: '您已經加入過會員！！',
+                okText: '確定'
+            }).then((res) => {
+                $state.go('done');
+            });
+        });
     }
 
     function validateFormData() {

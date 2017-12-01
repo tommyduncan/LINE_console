@@ -4,7 +4,7 @@ var Member = require('../schemas/memberSchema');
 
 router.post('/', (req, res) => {
     var member = new Member({
-        userId: req.body.userId,
+        userId: req.session.userProfiles.userId,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phone: req.body.phone,
@@ -12,7 +12,7 @@ router.post('/', (req, res) => {
         lineId: req.body.lineId
     });
 
-    Member.findOne({ userId: req.body.userId }).exec().then((doc) => {
+    Member.findOne({ userId: member.userId }).exec().then((doc) => {
         if (!doc)
             member.save().then((doc) => {
                 console.log(doc);
@@ -23,12 +23,12 @@ router.post('/', (req, res) => {
     });
 });
 
-router.post('/checkDuplicateMember', (req, res) => {
-    Member.findOne({ userId: req.body.userId }).exec().then((doc) => {
+router.get('/checkDuplicateMember', (req, res) => {
+    Member.findOne({ userId: req.session.userProfiles.userId }).exec().then((doc) => {
         if(doc)
             res.json({status: 1, data: doc});
         else
-            res.json({ status: 0, data: 'Member is already exist !' });
+            res.json({ status: 0, data: 'This user hasn\'t binded yet.'});
     });
 });
 

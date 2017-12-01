@@ -1,5 +1,6 @@
 var request = require('request');
 var config = require('../configs/general.config');
+var api = require('../configs/api.config');
 
 var sendTextMessage = function (textContent, callback) {
     var requestBody = {
@@ -17,7 +18,7 @@ var sendTextMessage = function (textContent, callback) {
             url: 'https://api.line.me/v2/bot/message/push',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + config.LINE.channelAccessToken
+                'Authorization': 'Bearer ' + config.LINE.message.channelAccessToken
             },
             method: 'POST',
             body: JSON.stringify(requestBody)
@@ -39,8 +40,8 @@ var sendImageMessage = function (imageName, callback) {
         messages: [
             {
                 type: 'image',
-                originalContentUrl: config.baseUrl + 'images/uploads/' + imageName,
-                previewImageUrl: config.baseUrl + 'images/uploads/preview/' + imageName
+                originalContentUrl: config.baseUrl + '/images/uploads/' + imageName,
+                previewImageUrl: config.baseUrl + '/images/uploads/preview/' + imageName
             }
         ]
     };
@@ -50,7 +51,7 @@ var sendImageMessage = function (imageName, callback) {
             url: 'https://api.line.me/v2/bot/message/push',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + config.LINE.channelAccessToken
+                'Authorization': 'Bearer ' + config.LINE.message.channelAccessToken
             },
             method: 'POST',
             body: JSON.stringify(requestBody)
@@ -67,6 +68,8 @@ var sendImageMessage = function (imageName, callback) {
 };
 
 var replyTemplateMessage = function (replyToken, userId,  callback) {
+    console.log(api.LINE.login.authorization + '?response_type=code&client_id=' + config.LINE.login.channelId + '&redirect_uri=' + config.baseUrl + '/users/validate' + '&state=bindUser&scope=profile');
+
     var requestBody = {
         replyToken: replyToken,
         messages: [
@@ -75,14 +78,15 @@ var replyTemplateMessage = function (replyToken, userId,  callback) {
                 "altText": "歡迎訊息",
                 "template": {
                     "type": "buttons",
-                    "thumbnailImageUrl": config.baseUrl +  + "images/Tommy&NianJ.jpg",
+                    "thumbnailImageUrl": config.baseUrl + "/images/Tommy&NianJ.jpg",
                     "title": "歡迎加入！",
                     "text": "加入會員，成為我們的一員吧 ~ ！",
                     "actions": [
                         {
                             "type": "uri",
                             "label": "註冊會員",
-                            "uri": config.baseUrl + "bind#/?userId=" + userId
+                            // "uri": config.baseUrl + "bind#/?userId=" + userId
+                            "uri": api.LINE.login.authorization + '?response_type=code&client_id=' + config.LINE.login.channelId + '&redirect_uri=' + config.baseUrl + '/users/validate' + '&state=bindUser&scope=profile'
                         }
                     ]
                 }
@@ -95,7 +99,7 @@ var replyTemplateMessage = function (replyToken, userId,  callback) {
             url: 'https://api.line.me/v2/bot/message/reply',
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
-                'Authorization': 'Bearer ' + config.LINE.channelAccessToken
+                'Authorization': 'Bearer ' + config.LINE.message.channelAccessToken
             },
             method: 'POST',
             body: JSON.stringify(requestBody)
