@@ -15,4 +15,8 @@ router.get('/bind', function (req, res, next) {
   res.render('bind', { title: '' });
 });
 
+router.get('/anniversary', function (req, res, next) {
+  res.render('anniversary', { title: '請輸入通關密碼' });
+});
+
 module.exports = router;

@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        <%= title %>
+    </title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+</head>
+
+<body style="background: url('http://img.taopic.com/uploads/allimg/110926/25-1109261FP147.jpg');">
+    <div style="text-align: center;">
+        <h1>請輸入通關密碼：</h1>
+        <input type=text id="password" />
+        <input type="button" value="確定" onclick="send()">
+        <br />
+        <br />
+        <video width="360" height="270" id="answerVideo" controls style="display: none">
+            <source src="videos/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function send() {
+        if ($('#password').val() === '我最愛老公梁景瀚') {
+            $('#answerVideo').show();
+        } else if (!$('#password').val()) {
+            alert('請輸入通關密碼！');
+        } else {
+            alert('通關密碼錯誤唷 ~~~');
+        }
+    }
+</script>

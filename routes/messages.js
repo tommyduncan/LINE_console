@@ -6,6 +6,9 @@ const imageUtil = require('../utils/imageUtil');
 const LineEventLogModel = require('../schemas/lineEventLogModel');
 const MessageLogModel = require('../schemas/messageLogModel');
 
+var request = require('request');
+var config = require('../configs/general.config');
+
 router.post('/', (req, res, next) => {
   var events = req.body.events;
 
@@ -34,11 +37,12 @@ router.post('/', (req, res, next) => {
           res.json({ status: 0, data: data });
         else
           res.json({ status: 1, data: data });
-      }); 
+      });
       break;
+
     case 'unfollow':
       lineEventLogModel.eventReferenceId = null;
-      
+
       lineEventLogModel.save((error, data) => {
         if (error) {
           console.log(handleError(error));
@@ -48,9 +52,27 @@ router.post('/', (req, res, next) => {
         res.json({ status: 1, data: data });
       });
       break;
+
     case 'postback':
+      console.log(">> Postback event: ");
       console.log(events[0].postback);
-      res.send('postback event.');
+
+      if (events[0].postback.data === 'answer' && events[0].postback.params.date === '2016-12-07')
+        line.sendTextMessage("恭喜妳答對了！！\n請點選下列網址進行下一步：\n" + config.baseUrl + "/anniversary", function (error, data) {
+          if (error)
+            res.json({ status: 0, data: data });
+          else
+            res.json({ status: 1, data: data });
+        });
+      else if (events[0].postback.data === 'answer' && events[0].postback.params.date !== '2016-12-07')
+        line.sendTextMessage("No No，答錯了唷 ~~~", function (error, data) {
+          if (error)
+            res.json({ status: 0, data: data });
+          else
+            res.json({ status: 1, data: data });
+        });
+
+      //res.send('postback event.');
       break;
 
     case 'message':
@@ -98,6 +120,57 @@ router.post('/sendImageMessage', function (req, res, next) {
     else
       res.json({ status: 1, data: data });
   });
+});
+
+router.get('/sendAnniversaryMessage', function (req, res, next) {
+  var requestBody = {
+    to: 'Ub5538a8f30409f45c7e7ba551dca9385',
+    messages: [
+      {
+        "type": "template",
+        "altText": "❤ Happy 1st Anniversary ❤",
+        "template": {
+          "type": "buttons",
+          "thumbnailImageUrl": config.baseUrl + "/images/Tommy&NianJ.jpg",
+          "title": "Question",
+          "text": "Tommy 跟 NianJ 是什麼時候在一起的呢？",
+          "actions": [
+            {
+              "type": "datetimepicker",
+              "label": "請選擇日期",
+              "data": "answer",
+              "mode": "date",
+              "initial": "2017-01-01"
+              // "uri": api.LINE.login.authorization + '?response_type=code&client_id=' + config.LINE.login.channelId + '&redirect_uri=' + config.baseUrl + '/users/validate' + '&state=bindUser&scope=profile'
+            }
+          ]
+        }
+      }
+    ]
+  };
+
+  request(
+    {
+      url: 'https://api.line.me/v2/bot/message/push',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + config.LINE.message.channelAccessToken
+      },
+      method: 'POST',
+      body: JSON.stringify(requestBody)
+    },
+    function (error, response, body) {
+      if (error)
+        // callback(error, null);
+        res.json(body);
+      else if (response.body.error)
+        // callback(response.body.error, null);
+        res.json(response.body.error);
+      else
+        // callback(null, body);
+        res.json(body);
+    }
+  );
 });
 
 module.exports = router;

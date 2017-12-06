@@ -1,6 +1,6 @@
 var config = {
-    baseUrl: 'https://93dcb5a3.ngrok.io',
-    // baseUrl: 'https://linux-tommy.csie.io',
+    // baseUrl: 'https://d13e0a34.ngrok.io',
+    baseUrl: 'https://linux-tommy.csie.io',
     LINE: {
         message: {
             channelId: '1506801507',

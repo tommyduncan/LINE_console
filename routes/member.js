@@ -34,7 +34,7 @@ router.get('/checkDuplicateMember', (req, res) => {
 
 router.get('/', (req, res) => {
     Member.find().exec().then((doc) => {
-        res.json({ status: 1, data: doc });
+        res.json(doc);
     }, function (err) {
         res.json({ status: 0, data: err});
     });
