@@ -1,18 +1,100 @@
 <div class="profile-content">
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label class="col-md-offset-6 col-md-2" for="title">文字訊息</label>
-        </div>        
-        <div class="form-group">
-            <label class="control-label col-md-2" for="messageContent">內容：</label>
-            <div class="col-md-10">
-                <textarea class="form-control" rows="5" ng-model="textContent"></textarea>
-            </div>
+    <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+            <button type="button" class="btn btn-info" ng-click="addTextMessageFrame()">文字</button>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-6 col-md-10">
-                <button type="submit" class="btn btn-default" ng-click="sendMessage()">發送</button>
-            </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info" ng-click="addImageMessageFrame()">圖片</button>
         </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info" ng-click="addStickerMessageFrame()">貼圖</button>
+        </div>
+    </div>
+    <br />
+    <div class="messageFrames"></div>
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="target">選擇發送對象：</label>
+            <select class="form-control" id="target">
+                <option value="all">所有使用者</option>
+                <option value="binded">已綁定使用者</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-info" ng-click="send()">送出</button>
     </form>
+    <br />
+    <div style="display: none;">
+        <!-- <div> -->
+        <!-- 上層樣板 -->
+        <div class="headerFrame"></div>
+        <!-- 文字訊息的樣板 -->
+        <div class="panel panel-info" id="textMessageFrame">
+            <div class="panel-heading">
+                <span class="panel-title">文字訊息</span>
+                <button class="btn btn-info btn-sm pull-right" id="deleteFrameBtn">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </div>
+            <div class="panel-body">
+                <br />
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="messageContent">內容：</label>
+                        <div class="col-md-10">
+                            <textarea class="form-control" rows="5" id="textContent"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 圖片訊息的樣板 -->
+        <div class="panel panel-info" id="imageMessageFrame">
+            <div class="panel-heading">
+                <span class="panel-title">圖片訊息</span>
+                <button class="btn btn-info btn-sm pull-right" id="deleteFrameBtn">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </div>
+            <div class="panel-body">
+                <br />
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="messageContent">欲發送之圖片：</label>
+                        <div class="col-md-9">
+                            <input type="file" class="uploadImage" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- 貼圖訊息的樣板 -->
+        <div class="panel panel-info" id="stickerMessageFrame">
+            <div class="panel-heading">
+                <span class="panel-title">貼圖訊息</span>
+                <button class="btn btn-info btn-sm pull-right" id="deleteFrameBtn">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </div>
+            <div class="panel-body">
+                <br />
+                <img class="selectedSticker">
+            </div>
+        </div>
+    </div>
+
+    <div class="stickerDialog">
+        <table>
+            <tr>
+                <td>
+                    <img class="sticker" id="1-1" src='/images/stickers/1-1.png'>
+                </td>
+                <td>
+                    <img class="sticker" id="1-2" src='/images/stickers/1-2.png'>
+                </td>
+                <td>
+                    <img class="sticker" id="1-3" src='/images/stickers/1-3.png'>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

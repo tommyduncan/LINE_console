@@ -1,5 +1,5 @@
 var config = {
-    // baseUrl: 'https://d13e0a34.ngrok.io',
+    // baseUrl: 'https://2d9b244e.ngrok.io',
     baseUrl: 'https://linux-tommy.csie.io',
     LINE: {
         message: {

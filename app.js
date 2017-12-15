@@ -39,10 +39,12 @@ app.use(passport.session());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+// mongoose connection (deprecated as of 4.11.0)
+// mongoose.connect('mongodb://tommyduncan:tommy801021@localhost:27017/LINE_Console', function (error) {
+//   // if error is truthy, the initial connection failed.
+// })
 // mongoose connection
-mongoose.connect('mongodb://tommyduncan:tommy801021@localhost:27017/LINE_Console', function (error) {
-  // if error is truthy, the initial connection failed.
-})
+mongoose.connect('mongodb://tommyduncan:tommy801021@localhost:27017/LINE_Console', { useMongoClient: true });
 
 app.use('/', index);
 app.use('/users', users);

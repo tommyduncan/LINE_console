@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const line = require('../modules/messageModule');
+//const line = require('../modules/messageModule');
+const line = require('../services/lineMessageService');
 const imageUtil = require('../utils/imageUtil');
 const LineEventLogModel = require('../schemas/lineEventLogModel');
 const MessageLogModel = require('../schemas/messageLogModel');
@@ -102,14 +103,33 @@ router.post('/', (req, res, next) => {
   }
 });
 
-router.post('/sendTextMessage', function (req, res, next) {
+router.post('/push', function (req, res, next) {
+  line.pushMessages(req.body.targetUser, req.body.messageObjects, (error, result) => {
+    if (error)
+      res.json({ status: 0, data: error });
+    else
+      res.json({ status: 1, data: 'Push message success!' });
+  });
+});
+
+router.post('/multicast', function (req, res, next) {
+  line.multicastMessages(req.body.target, req.body.messages, (error, result) => {
+    if (error)
+      res.json({ status: 0, data: error });
+    else
+      res.json({ status: 1, data: 'Push message success!' });
+  });
+});
+
+
+/* router.post('/sendTextMessage', function (req, res, next) {
   line.sendTextMessage(req.body.text, function (error, data) {
     if (error)
       res.json({ status: 0, data: data });
     else
       res.json({ status: 1, data: data });
   });
-});
+}); */
 
 router.post('/sendImageMessage', function (req, res, next) {
   imageUtil.resizeImage(req.body.imageName);
@@ -123,54 +143,35 @@ router.post('/sendImageMessage', function (req, res, next) {
 });
 
 router.get('/sendAnniversaryMessage', function (req, res, next) {
-  var requestBody = {
-    to: 'Ub5538a8f30409f45c7e7ba551dca9385',
-    messages: [
-      {
-        "type": "template",
-        "altText": "❤ Happy 1st Anniversary ❤",
-        "template": {
-          "type": "buttons",
-          "thumbnailImageUrl": config.baseUrl + "/images/Tommy&NianJ.jpg",
-          "title": "Question",
-          "text": "Tommy 跟 NianJ 是什麼時候在一起的呢？",
-          "actions": [
-            {
-              "type": "datetimepicker",
-              "label": "請選擇日期",
-              "data": "answer",
-              "mode": "date",
-              "initial": "2017-01-01"
-              // "uri": api.LINE.login.authorization + '?response_type=code&client_id=' + config.LINE.login.channelId + '&redirect_uri=' + config.baseUrl + '/users/validate' + '&state=bindUser&scope=profile'
-            }
-          ]
-        }
-      }
-    ]
-  };
-
-  request(
+  var targetUserId = 'Ub5538a8f30409f45c7e7ba551dca9385';
+  var messages = [
     {
-      url: 'https://api.line.me/v2/bot/message/push',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + config.LINE.message.channelAccessToken
-      },
-      method: 'POST',
-      body: JSON.stringify(requestBody)
-    },
-    function (error, response, body) {
-      if (error)
-        // callback(error, null);
-        res.json(body);
-      else if (response.body.error)
-        // callback(response.body.error, null);
-        res.json(response.body.error);
-      else
-        // callback(null, body);
-        res.json(body);
+      "type": "template",
+      "altText": "❤ Happy 1st Anniversary ❤",
+      "template": {
+        "type": "buttons",
+        "thumbnailImageUrl": config.baseUrl + "/images/Tommy&NianJ.jpg",
+        "title": "Question",
+        "text": "Tommy 跟 NianJ 是什麼時候在一起的呢？",
+        "actions": [
+          {
+            "type": "datetimepicker",
+            "label": "請選擇日期",
+            "data": "answer",
+            "mode": "date",
+            "initial": "2017-01-01"
+          }
+        ]
+      }
     }
-  );
+  ];
+
+  line.pushMessages(targetUserId, messages, (error, result) => {
+    if (error)
+      res.json({ status: 0, data: error });
+    else
+      res.json({ status: 1, data: 'Push message success!' });
+  });
 });
 
 module.exports = router;

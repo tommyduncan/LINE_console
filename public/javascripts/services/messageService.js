@@ -1,5 +1,14 @@
 angular.module('LINE_console').service('MessageService', function ($http) {
-    this.sendTextMessage = function (textContent, onSuccess) {
+    this.multicastMessages = function (messageObject, onSuccess) {
+        $http.post('/messages/multicast', messageObject)
+            .then(function successCallback(response, status, headers, config) {
+                (onSuccess || angular.noop)(response);
+            }, function errorCallback(response) {
+                console.log("Error Data:" + response);
+            });
+    };
+
+    /*this.sendTextMessage = function (textContent, onSuccess) {
         var textObject = {
             text: textContent
         };
@@ -14,7 +23,7 @@ angular.module('LINE_console').service('MessageService', function ($http) {
                 console.log('Headers: ' + headers);
                 console.log('Config: ' + config);
             });
-    };
+    };*/
 
     this.sendImageMessage = function (imageName, onSuccess) {
         var imageObject = {
