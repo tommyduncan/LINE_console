@@ -1,23 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-//const line = require('../modules/messageModule');
+const moment = require('moment');
 const line = require('../services/lineMessageService');
 const imageUtil = require('../utils/imageUtil');
 const LineEventLogModel = require('../schemas/lineEventLogModel');
 const MessageLogModel = require('../schemas/messageLogModel');
+const LineUser = require('../schemas/lineUserSchema');
 
 var request = require('request');
 var config = require('../configs/general.config');
 
 router.post('/', (req, res, next) => {
   var events = req.body.events;
+  var timestamp = moment(events[0].timestamp).add(8, 'hours');
 
   var lineEventLogModel = new LineEventLogModel({
     evenType: events[0].type,
     sourceType: events[0].source.type,
     userId: events[0].source.userId,
-    timestamp: events[0].timestamp
+    timestamp: timestamp
   });
 
   switch (events[0].type) {
@@ -30,15 +32,36 @@ router.post('/', (req, res, next) => {
 
           res.json({ status: 0, data: error });
         }
-        //res.json({ status: 1, data: data });
+        LineUser.findOne({ userId: events[0].source.userId }, function (error, lineUser) {
+          if (error) {
+            console.log(handleError(error));
+
+            res.json({ status: 0, data: error });
+          }
+
+          if (!lineUser) {
+            var lineUser = new LineUser({ userId: events[0].source.userId, timestamp: timestamp });
+
+            lineUser.save((error, lineUser) => {
+              if (error) {
+                console.log(handleError(error));
+
+                res.json({ status: 0, data: error });
+              }
+              res.json({ status: 1, data: lineUser });
+            });
+          } else {
+            res.json({ status: 1, data: lineUser });
+          }
+        });
       });
 
-      line.replyTemplateMessage(events[0].replyToken, events[0].source.userId, function (error, data) {
-        if (error)
-          res.json({ status: 0, data: data });
-        else
-          res.json({ status: 1, data: data });
-      });
+      // line.replyTemplateMessage(events[0].replyToken, events[0].source.userId, function (error, data) {
+      //   if (error)
+      //     res.json({ status: 0, data: data });
+      //   else
+      //     res.json({ status: 1, data: data });
+      // });
       break;
 
     case 'unfollow':
@@ -50,6 +73,7 @@ router.post('/', (req, res, next) => {
 
           res.json({ status: 0, data: error });
         }
+
         res.json({ status: 1, data: data });
       });
       break;

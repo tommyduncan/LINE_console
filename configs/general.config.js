@@ -1,5 +1,4 @@
 var config = {
-    // baseUrl: 'https://2d9b244e.ngrok.io',
     baseUrl: 'https://linux-tommy.csie.io',
     LINE: {
         message: {

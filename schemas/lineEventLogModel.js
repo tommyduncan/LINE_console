@@ -6,7 +6,7 @@ var LineEventLog = new Schema({
     sourceType: { type: String, required: true },
     userId: { type: String, required: true },
     eventReferenceId: {type: Schema.Types.ObjectId, ref: 'MessageLogs'}, 
-    timestamp: String
+    timestamp: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('LineEventLogs', LineEventLog, 'LineEventLogs');
