@@ -12,9 +12,9 @@ angular.module('LINE_console').config(function ($stateProvider, $urlRouterProvid
             controller: 'MembersController'
         })
         .state('text-message', {
-            url: '/textMessage', 
-            templateUrl: '/templates/textMessage.html', 
-            controller: 'TextMessageController'
+            url: '/sendMessage', 
+            templateUrl: '/templates/sendMessage.html', 
+            controller: 'SendMessageController'
         })
         .state('image-message', {
             url: '/imageMessage', 

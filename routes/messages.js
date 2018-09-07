@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const moment = require('moment');
 const line = require('../services/lineMessageService');
@@ -7,9 +8,20 @@ const imageUtil = require('../utils/imageUtil');
 const LineEventLogModel = require('../schemas/lineEventLogModel');
 const MessageLogModel = require('../schemas/messageLogModel');
 const LineUser = require('../schemas/lineUserSchema');
+const config = require('../configs/general.config');
 
 var request = require('request');
-var config = require('../configs/general.config');
+
+router.post('/', (req, res, next) => {
+  const channelSecret = config.LINE.message.channelSecret;
+  const body = JSON.stringify(req.body);
+  const signature = crypto.createHmac('SHA256', channelSecret).update(body).digest('base64');
+
+  if (req.headers['x-line-signature'] === signature)
+    next('route');
+  else
+    res.status(401).send('Invalid requsest !');
+});
 
 router.post('/', (req, res, next) => {
   var events = req.body.events;
@@ -110,7 +122,7 @@ router.post('/', (req, res, next) => {
         messageContent: (typeof events[0].message.text === 'undefined') ? null : events[0].message.text
       });
 
-      console.log(messageLogModel);
+      // console.log(messageLogModel);
 
       messageLogModel.save(error => {
         if (error) { console.log(error); res.json({ status: 0, data: error }); }
@@ -123,6 +135,10 @@ router.post('/', (req, res, next) => {
           res.json({ status: 1, data: data });
         });
       });
+      break;
+
+    default:
+      res.json({ status: 1, data: 'Other type of event.' });
       break;
   }
 });

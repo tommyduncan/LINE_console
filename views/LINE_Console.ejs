@@ -27,7 +27,7 @@
     <script type="text/javascript" src="/javascripts/app.run.js"></script>
 
     <script type="text/javascript" src="/javascripts/controllers/membersController.js"></script>
-    <script type="text/javascript" src="/javascripts/controllers/textMessageController.js"></script>
+    <script type="text/javascript" src="/javascripts/controllers/sendMessageController.js"></script>
     <script type="text/javascript" src="/javascripts/controllers/imageMessageController.js"></script>
 
     <script type="text/javascript" src="/javascripts/services/memberService.js"></script>
@@ -68,48 +68,51 @@
                         <ul class="nav">
                             <li>
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i> 帳戶資訊 
+                                    <i class="glyphicon glyphicon-user"></i> 帳戶資訊
                                 </a>
                             </li>
                             <li>
                                 <a href="/#!/members">
-                                    <i class="glyphicon glyphicon-list"></i> 會員列表 
+                                    <i class="glyphicon glyphicon-list"></i> 會員列表
                                 </a>
                             </li>
                             <li>
-                                <a href="#" target="_blank">
-                                    <i class="glyphicon glyphicon-calendar"></i> 活動資訊 
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-calendar"></i> 活動
                                 </a>
                             </li>
                             <li class="dropdown">
                                 <a href="#">
-                                    <i class="glyphicon glyphicon-pencil"></i> 發送訊息 
+                                    <i class="glyphicon glyphicon-pencil"></i> 訊息
                                 </a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="/#!/textMessage"><i class=""></i>文字訊息</a>
+                                        <a href="/#!/sendMessage">
+                                            <i class=""></i>推播訊息</a>
                                     </li>
                                     <li>
-                                        <a href="/#!/imageMessage"><i class=""></i>圖片訊息</a>
+                                        <a href="/#!/sendMessageList">
+                                            <i class=""></i>推播訊息列表</a>
                                     </li>
                                     <li>
-                                        <a href="/#!/textMessage"><i class=""></i>樣板訊息</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-transfer"></i> 自動回應
-                                </a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="/#!/textMessage"><i class=""></i>關鍵字回應</a>
+                                        <a href="/#!/createTemplateMessage">
+                                            <i class=""></i>建立樣板訊息</a>
                                     </li>
                                     <li>
-                                        <a href="/#!/imageMessage"><i class=""></i>黑名單</a>
+                                        <a href="/#!/templateMessageList">
+                                            <i class=""></i>樣板訊息列表</a>
                                     </li>
                                     <li>
-                                        <a href="/#!/textMessage"><i class=""></i>互動式訊息</a>
+                                        <a href="/#!/autoReply">
+                                            <i class=""></i>歡迎訊息</a>
+                                    </li>
+                                    <li>
+                                        <a href="/#!/keyWordReply">
+                                            <i class=""></i>關鍵字回覆</a>
+                                    </li>
+                                    <li>
+                                        <a href="/#!/blackList">
+                                            <i class=""></i>黑名單</a>
                                     </li>
                                 </ul>
                             </li>

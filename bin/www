@@ -8,22 +8,22 @@ var app = require('../app');
 var debug = require('debug')('line-server:server');
 var http = require('http');
 var https = require('https');
-var ssl = require('../ssl/sslLicense');
+// var ssl = require('../ssl/sslLicense');
 
 /**
  * Create HTTPS server.
  */
  
-var https_port = normalizePort(process.env.PORT || '443');
-app.set('https_port', https_port);
+// var https_port = normalizePort(process.env.PORT || '443');
+// app.set('https_port', https_port);
 
-var httpsServer = https.createServer(ssl.options, app);
+// var httpsServer = https.createServer(ssl.options, app);
 
-httpsServer.listen(https_port, function(){
-  console.log("Https server is run on port: " + https_port);
-});
-httpsServer.on('error', onError);
-httpsServer.on('listening', onListening);
+// httpsServer.listen(https_port, function(){
+//   console.log("Https server is run on port: " + https_port);
+// });
+// httpsServer.on('error', onError);
+// httpsServer.on('listening', onListening);
 
 /**
  * Get port from environment and store in Express.

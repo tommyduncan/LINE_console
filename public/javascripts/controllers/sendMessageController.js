@@ -1,4 +1,4 @@
-angular.module('LINE_console').controller('TextMessageController', function ($scope, $q, MessageService, FileService) {
+angular.module('LINE_console').controller('SendMessageController', function ($scope, $q, MessageService, FileService) {
     var frameCounter = 0;    // 訊息欄計數器
     var imageFiles = [];    // 儲存圖片訊息的圖檔
     var headerFrame = $('.headerFrame').clone(true);    // 訊息欄外層的 <div> 區塊
